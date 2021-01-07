@@ -24,10 +24,6 @@ public class PregameMenu {
     static VBox menu;
 
     static final String titleURL = "images/title.png";
-    static final String startUrl = "images/startgame-button.png";
-    static final String startHoverUrl = "images/startgame-button-hover.png";
-    static final String sizeUrl = "images/size-icon.png";
-    static final String diffUrl = "images/diff-icon.png";
 
     public PregameMenu(int[] stagedims){
         menu = new VBox(stagedims[1]/12);
@@ -38,96 +34,7 @@ public class PregameMenu {
         title.setFitWidth(400);
         title.setFitHeight(100);
 
-
-
-        //Size
-        Slider sizeSlider = new Slider();
-        sizeSlider.setMin(10);
-        sizeSlider.setMax(50);
-        sizeSlider.setShowTickLabels(true);
-        sizeSlider.setMaxWidth(stagedims[0]/4);
-
-        sizeSlider.setMajorTickUnit(20);
-        sizeSlider.setValue(30);
-        Main.setGamesize(30);
-
-        Label sizeValueText = new Label("" + sizeSlider.getValue());
-        sizeValueText.setStyle("-fx-font-size: 16px; -fx-text-fill: green;");
-
-        sizeSlider.valueProperty().addListener(new ChangeListener<Number>() {
-
-            @Override
-            public void changed(
-                    ObservableValue<? extends Number> observableValue,
-                    Number oldValue,
-                    Number newValue) {
-                    sizeValueText.setText("" + newValue.intValue());
-                    Main.setGamesize(newValue.intValue());
-            }
-        });
-
-        ImageView sizePic = new ImageView(new Image(sizeUrl));
-        sizePic.setFitWidth(50);
-        sizePic.setFitHeight(25);
-
-        HBox sizeTitle = new HBox(0);
-        sizeTitle.setAlignment(Pos.CENTER);
-        sizeTitle.getChildren().addAll(sizePic,sizeValueText);
-
-        VBox sizeElement = new VBox(12);
-        sizeElement.setAlignment(Pos.CENTER);
-        sizeElement.getChildren().addAll(sizeTitle, sizeSlider);
-
-
-
-        //Difficulty
-        Slider diffSlider = new Slider();
-        diffSlider.setMin(0);
-        diffSlider.setMax(10);
-        diffSlider.setShowTickLabels(true);
-        diffSlider.setMaxWidth(stagedims[0]/4);
-
-        diffSlider.setMajorTickUnit(5);
-        diffSlider.setValue(5);
-        Main.setDifficulty(5);
-
-        Label diffValueText = new Label("" + diffSlider.getValue());
-        diffValueText.setStyle("-fx-font-size: 16px; -fx-text-fill: green;");
-
-        diffSlider.valueProperty().addListener(new ChangeListener<Number>() {
-
-            @Override
-            public void changed(
-                    ObservableValue<? extends Number> observableValue,
-                    Number oldValue,
-                    Number newValue) {
-                diffValueText.setText("" + newValue.intValue());
-                Main.setDifficulty(newValue.intValue());
-            }
-        });
-
-        ImageView diffPic = new ImageView(new Image(diffUrl));
-        diffPic.setFitWidth(100);
-        diffPic.setFitHeight(25);
-
-        HBox diffTitle = new HBox(0);
-        diffTitle.setAlignment(Pos.CENTER);
-        diffTitle.getChildren().addAll(diffPic,diffValueText);
-
-        VBox diffElement = new VBox(12);
-        diffElement.setAlignment(Pos.CENTER);
-        diffElement.getChildren().addAll(diffTitle, diffSlider);
-
-
-
-        //Start
-        Rectangle startbutton = new Rectangle(200,50);
-        startbutton.setFill(new ImagePattern(new Image(startUrl)));
-        startbutton.setOnMouseEntered(e -> startbutton.setFill(new ImagePattern(new Image(startHoverUrl))));
-        startbutton.setOnMouseExited(e -> startbutton.setFill(new ImagePattern(new Image(startUrl))));
-        startbutton.setOnMouseClicked(e -> {Main.collectGameScene(); Main.goToScene("game");});
-
-        menu.getChildren().addAll(title, sizeElement, diffElement, startbutton);
+        menu.getChildren().addAll(title, new SizeSlider(stagedims).visual(), new DiffSlider(stagedims).visual(), new StartButton().visual());
         scene = new Scene(menu, stagedims[0], stagedims[1]);
     }
 
