@@ -25,6 +25,7 @@ public class Main extends Application {
 
     static int difficulty;
 
+
     @Override
     public void start(Stage primaryStage) throws Exception{
 

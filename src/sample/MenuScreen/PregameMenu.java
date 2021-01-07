@@ -26,7 +26,7 @@ public class PregameMenu {
     static final String titleURL = "images/title.png";
 
     public PregameMenu(int[] stagedims){
-        menu = new VBox(stagedims[1]/12);
+        menu = new VBox((double) stagedims[1]/12);
         menu.setAlignment(Pos.CENTER);
 
         //Title

@@ -19,8 +19,8 @@ public class Tile {
 
     private Rectangle tile;
 
-    private final String tileBasicURL = "images/tile-reg.png";
-    private final String tileHoverURL = "images/tile-hov.png";
+    private final String tileBasicURL = "images/tile-mini-reg.png";
+    private final String tileHoverURL = "images/tile-mini-hov.png";
 
     private String value;
 

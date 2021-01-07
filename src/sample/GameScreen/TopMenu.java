@@ -12,7 +12,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import sample.Main;
 
-public class TopMenu {
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class TopMenu<calcTimeString> {
 
     private HBox top;
 
@@ -40,13 +43,7 @@ public class TopMenu {
         filler2.getChildren().add(title);
 
         top.setAlignment(Pos.CENTER);
-        top.getChildren().addAll(filler1, filler2);
-
-        //Setup timer for top
-        StackPane counter = new StackPane();
-        Text counterText = new Text("" + System.currentTimeMillis());
-        counter.getChildren().add(counterText);
-        top.getChildren().add(counter);
+        top.getChildren().addAll(filler1, filler2, new TimeCounter().visual());
     }
 
     public HBox visual(){

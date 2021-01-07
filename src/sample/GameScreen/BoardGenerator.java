@@ -25,7 +25,7 @@ public class BoardGenerator {
         }
 
         public static double calculateTilesize(int[] dims, int[] info){
-            return (dims[2] - 2*info[1] - (dims[0]-1)*info[0])/dims[0];
+            return ((double)dims[2] - 2*info[1] - (dims[0]-1)*info[0])/dims[0];
         }
 
         public GridPane visual(){
