@@ -18,7 +18,6 @@ public class BoardGenerator {
                 for (int row = 0; row < dims[1]; row++) {
                     double tilesize = calculateTilesize(dims, info);
                     Tile tile = new Tile(new double[]{tilesize, tilesize}, new int[]{col, row}, "1");
-                    tile.visual().setOnMouseClicked(e -> System.out.println("yessir"));
                     tileGrid.getChildren().add(tile.visual());
                 }
             }

@@ -18,7 +18,7 @@ public class Main extends Application {
     static final int stageHeight = 600;
 
     static final int inset = 20;
-    static final int gap = 2;
+    static final int gap = 0;
 
     static int sizeX;
     static int sizeY;

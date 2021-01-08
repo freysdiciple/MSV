@@ -7,15 +7,14 @@ import sample.Main;
 
 public class StartButton {
 
-    static final String startUrl = "images/startgame-button.png";
-    static final String startHoverUrl = "images/startgame-button-hover.png";
+    static final String startUrl = "images/premenu-start-game.png";
     static Rectangle startbutton;
 
     public StartButton() {
         startbutton = new Rectangle(200, 50);
         startbutton.setFill(new ImagePattern(new Image(startUrl)));
-        startbutton.setOnMouseEntered(e -> startbutton.setFill(new ImagePattern(new Image(startHoverUrl))));
-        startbutton.setOnMouseExited(e -> startbutton.setFill(new ImagePattern(new Image(startUrl))));
+        startbutton.setId("pixelbutton");
+
         startbutton.setOnMouseClicked(e -> {
             Main.collectGameScene();
             Main.goToScene("game");

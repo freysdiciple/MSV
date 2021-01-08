@@ -9,6 +9,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import sample.Main;
 
 public class SizeSlider {
@@ -22,39 +25,26 @@ public class SizeSlider {
         Slider sizeSlider = new Slider();
         sizeSlider.setMin(10);
         sizeSlider.setMax(50);
-        sizeSlider.setShowTickLabels(true);
         sizeSlider.setMaxWidth(stagedims[0]/4);
 
-        sizeSlider.setMajorTickUnit(20);
         sizeSlider.setValue(30);
         Main.setGamesize(30);
 
-        Label sizeValueText = new Label("" + sizeSlider.getValue());
-        sizeValueText.setStyle("-fx-font-size: 16px; -fx-text-fill: green;");
+        String initialText = "Size: " + sizeSlider.getValue();
+        Text sizeValueText = new Text(initialText.substring(0,initialText.length() -2));
+        Font pixelfont = Font.loadFont(this.getClass().getResource("../PressStart2P-Regular.ttf").toExternalForm(), 16);
+        sizeValueText.setFont(pixelfont);
+        sizeValueText.setFill(Color.WHITE);
 
-        sizeSlider.valueProperty().addListener(new ChangeListener<Number>() {
-
-            @Override
-            public void changed(
-                    ObservableValue<? extends Number> observableValue,
-                    Number oldValue,
-                    Number newValue) {
-                sizeValueText.setText("" + newValue.intValue());
-                Main.setGamesize(newValue.intValue());
-            }
+        sizeSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+            sizeValueText.setText("Size: " + newValue.intValue());
+            Main.setGamesize(newValue.intValue());
         });
 
-        ImageView sizePic = new ImageView(new Image(sizeUrl));
-        sizePic.setFitWidth(50);
-        sizePic.setFitHeight(25);
-
-        HBox sizeTitle = new HBox(0);
-        sizeTitle.setAlignment(Pos.CENTER);
-        sizeTitle.getChildren().addAll(sizePic,sizeValueText);
 
         sizeElement = new VBox(12);
         sizeElement.setAlignment(Pos.CENTER);
-        sizeElement.getChildren().addAll(sizeTitle, sizeSlider);
+        sizeElement.getChildren().addAll(sizeValueText, sizeSlider);
 
     }
 

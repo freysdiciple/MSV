@@ -9,6 +9,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import sample.Main;
 
 public class DiffSlider {
@@ -22,39 +25,25 @@ public class DiffSlider {
         Slider diffSlider = new Slider();
         diffSlider.setMin(0);
         diffSlider.setMax(10);
-        diffSlider.setShowTickLabels(true);
         diffSlider.setMaxWidth(stagedims[0]/4);
 
-        diffSlider.setMajorTickUnit(5);
         diffSlider.setValue(5);
         Main.setDifficulty(5);
 
-        Label diffValueText = new Label("" + diffSlider.getValue());
-        diffValueText.setStyle("-fx-font-size: 16px; -fx-text-fill: green;");
+        String initialText = "Difficulty: " + diffSlider.getValue();
+        Text diffValueText = new Text(initialText.substring(0,initialText.length() -2));
+        Font pixelfont = Font.loadFont(this.getClass().getResource("../PressStart2P-Regular.ttf").toExternalForm(), 16);
+        diffValueText.setFont(pixelfont);
+        diffValueText.setFill(Color.WHITE);
 
-        diffSlider.valueProperty().addListener(new ChangeListener<Number>() {
-
-            @Override
-            public void changed(
-                    ObservableValue<? extends Number> observableValue,
-                    Number oldValue,
-                    Number newValue) {
-                diffValueText.setText("" + newValue.intValue());
-                Main.setDifficulty(newValue.intValue());
-            }
+        diffSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+            diffValueText.setText("Difficulty: " + newValue.intValue());
+            Main.setDifficulty(newValue.intValue());
         });
-
-        ImageView diffPic = new ImageView(new Image(diffUrl));
-        diffPic.setFitWidth(100);
-        diffPic.setFitHeight(25);
-
-        HBox diffTitle = new HBox(0);
-        diffTitle.setAlignment(Pos.CENTER);
-        diffTitle.getChildren().addAll(diffPic,diffValueText);
 
         diffElement = new VBox(12);
         diffElement.setAlignment(Pos.CENTER);
-        diffElement.getChildren().addAll(diffTitle, diffSlider);
+        diffElement.getChildren().addAll(diffValueText, diffSlider);
     }
 
     public VBox visual(){

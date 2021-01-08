@@ -19,10 +19,12 @@ public class Tile {
 
     private Rectangle tile;
 
-    private final String tileBasicURL = "images/tile-mini-reg.png";
-    private final String tileHoverURL = "images/tile-mini-hov.png";
+    private final String tileBasicURL = "images/tile-grass.jpg";
+    private final String tileHoverURL = "images/tile-grass-hover.jpg";
+    private final String tileClickedURL = "images/tile-dirt.jpg";
 
     private String value;
+    private boolean clicked;
 
     public Tile(double[] dims, int[] pos, String value){
         this.width = dims[0];
@@ -43,8 +45,12 @@ public class Tile {
         Image tileBasic = new Image(tileBasicURL);
         Image tileHover = new Image(tileHoverURL);
         tile.setFill(new ImagePattern(tileBasic));
-        tile.setOnMouseEntered(e -> tile.setFill(new ImagePattern(tileHover)));
-        tile.setOnMouseExited(e -> tile.setFill(new ImagePattern(tileBasic)));
+
+        tile.setOnMouseEntered(e -> {if(!clicked) {tile.setFill(new ImagePattern(tileHover));}});
+        tile.setOnMouseExited(e -> {if(!clicked) {tile.setFill(new ImagePattern(tileBasic));}});
+        tile.setOnMouseClicked(e -> {clicked = true; tile.setFill(new ImagePattern(new Image(tileClickedURL)));});
+
+        tile.setStyle("-fx-cursor: hand;");
     }
 
     public Rectangle visual(){
