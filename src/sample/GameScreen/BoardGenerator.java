@@ -2,7 +2,6 @@ package sample.GameScreen;
 
 import javafx.geometry.Insets;
 import javafx.scene.layout.*;
-import sample.Tile;
 
 public class BoardGenerator {
 
