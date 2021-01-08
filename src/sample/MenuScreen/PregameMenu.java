@@ -38,7 +38,7 @@ public class PregameMenu {
 
         menu.getChildren().addAll(title, new SizeSlider(stagedims).visual(), new DiffSlider(stagedims).visual(), new StartButton().visual());
         scene = new Scene(menu, stagedims[0], stagedims[1]);
-        scene.getStylesheets().add(this.getClass().getResource("../Styles.css").toExternalForm());
+        scene.getStylesheets().add(this.getClass().getResource("./MenuStyles.css").toExternalForm());
     }
 
     public Scene getScene() {
