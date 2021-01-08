@@ -19,6 +19,7 @@ public class HexTile {
         ypos = pos[1];
 
         tile = new Polygon();
+        //Skaber sekskantens form
         tile.getPoints().addAll(
                 0.0,0.0,
                 sidelength,0.0,
