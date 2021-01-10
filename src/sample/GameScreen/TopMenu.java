@@ -1,5 +1,6 @@
 package sample.GameScreen;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -15,25 +16,27 @@ import sample.Main;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class TopMenu<calcTimeString> {
+public class TopMenu {
 
     private HBox top;
 
-    static final String titleURL = "images/title.png";
-    static final String newGameURL = "images/new-game.png";
-    static final String newGameHoverURL = "images/new-game-hover.png";
+    static final String titleURL = "images/premenu-title.png";
+    static final String newGameURL = "images/pre-new-game.png";
 
-    public TopMenu(int stagewidth, Stage stage, Scene scene) {
+    public TopMenu(int stagewidth, int inset) {
         top = new HBox(stagewidth/8);
+        top.setPadding(new Insets(inset,inset,inset+10,inset));
+        top.setAlignment(Pos.CENTER);
+        top.setId("top-panel");
+
         ImageView title = new ImageView();
         title.setImage(new Image(titleURL));
-        title.setFitWidth(256);
-        title.setFitHeight(64);
+        title.setFitWidth(360);
+        title.setFitHeight(45);
 
-        Rectangle newgame = new Rectangle(120,40);
+        Rectangle newgame = new Rectangle(180,40);
         newgame.setFill(new ImagePattern(new Image(newGameURL)));
-        newgame.setOnMouseEntered(e -> {newgame.setFill(new ImagePattern(new Image(newGameHoverURL)));});
-        newgame.setOnMouseExited(e -> newgame.setFill(new ImagePattern(new Image(newGameURL))));
+        newgame.setId("newgame-button");
         newgame.setOnMouseClicked(e -> Main.goToScene("pre"));
 
         StackPane filler1 = new StackPane();
@@ -42,8 +45,11 @@ public class TopMenu<calcTimeString> {
         StackPane filler2 = new StackPane();
         filler2.getChildren().add(title);
 
+        StackPane filler3 = new StackPane();
+        filler3.getChildren().add(new TimeCounter().visual());
+
         top.setAlignment(Pos.CENTER);
-        top.getChildren().addAll(filler1, filler2, new TimeCounter().visual());
+        top.getChildren().addAll(filler1, filler2, filler3);
     }
 
     public HBox visual(){

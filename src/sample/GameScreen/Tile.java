@@ -19,10 +19,6 @@ public class Tile {
 
     private Rectangle tile;
 
-    private final String tileBasicURL = "images/tile-grass.jpg";
-    private final String tileHoverURL = "images/tile-grass-hover.jpg";
-    private final String tileClickedURL = "images/tile-dirt.jpg";
-
     private String value;
     private boolean clicked;
 
@@ -42,14 +38,6 @@ public class Tile {
     }
 
     public void initialConfig(){
-        Image tileBasic = new Image(tileBasicURL);
-        Image tileHover = new Image(tileHoverURL);
-        tile.setFill(new ImagePattern(tileBasic));
-
-        tile.setOnMouseEntered(e -> {if(!clicked) {tile.setFill(new ImagePattern(tileHover));}});
-        tile.setOnMouseExited(e -> {if(!clicked) {tile.setFill(new ImagePattern(tileBasic));}});
-        tile.setOnMouseClicked(e -> {clicked = true; tile.setFill(new ImagePattern(new Image(tileClickedURL)));});
-
         tile.setStyle("-fx-cursor: hand;");
     }
 

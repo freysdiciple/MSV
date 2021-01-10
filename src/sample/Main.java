@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import sample.GameScreen.BoardGenerator;
+import sample.GameScreen.GameScene;
 import sample.GameScreen.HexagonalBoard;
 import sample.GameScreen.TopMenu;
 import sample.MenuScreen.PregameMenu;
@@ -18,7 +19,6 @@ public class Main extends Application {
     static int stageWidth = 1000;
     static int stageHeight = 600;
 
-    static final int inset = 20;
     static final int gap = 0;
 
     static int sizeX;
@@ -44,10 +44,7 @@ public class Main extends Application {
     }
 
     public static void collectGameScene(){
-        BorderPane gameView = new BorderPane();
-        gameView.setTop(new TopMenu(stageWidth, window, pregame).visual());
-        gameView.setCenter(new HexagonalBoard(stageWidth, inset).visual());
-        game = new Scene(gameView);
+        game = new GameScene(stageWidth, sizeX).visual();
     }
 
     public static void goToScene(String where){

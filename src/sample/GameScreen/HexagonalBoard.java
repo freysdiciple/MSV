@@ -2,26 +2,34 @@ package sample.GameScreen;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 public class HexagonalBoard {
-    private int size = 4;
+    private int size = 10;
 
     private double sideLength;
 
     static private HBox board;
+    static private VBox boat;
+    static private StackPane whole;
 
-    public HexagonalBoard(int stagewidth, int inset){
+    public HexagonalBoard(int stagewidth, int inset, int _size){
+        size = _size;
 
         board = new HBox();
         board.setPadding(new Insets(inset,inset,inset,inset));
         board.setAlignment(Pos.CENTER);
 
-        sideLength = (stagewidth/1.5 - 2*inset)/(4*size + 2);
+        sideLength = (stagewidth/2 - 2*inset)/(4*size + 2);
 
         HBox verticalAxis = new HBox(0);
 
@@ -48,9 +56,29 @@ public class HexagonalBoard {
 
         board.getChildren().add(verticalAxis);
 
+        boat = new VBox(10);
+        boat.setPadding(new Insets(0,0,0,50));
+        boat.setAlignment(Pos.CENTER_LEFT);
+
+        Text boattext = new Text("Help me get through!\nFind all the mines!");
+        Font pixelfont = Font.loadFont(this.getClass().getResource("../PressStart2P-Regular.ttf").toExternalForm(), 10);
+        boattext.setLineSpacing(5);
+        boattext.setFont(pixelfont);
+        boattext.setFill(Color.WHITE);
+
+        ImageView boatimage = new ImageView(new Image("images/image_submarine.gif"));
+        boatimage.setFitWidth(160);
+        boatimage.setFitHeight(75);
+
+        boat.getChildren().addAll(boattext, boatimage);
+
+
+        whole = new StackPane();
+        whole.getChildren().addAll(boat, board);
+
     }
 
-    public HBox visual(){
-        return board;
+    public StackPane visual(){
+        return whole;
     }
 }

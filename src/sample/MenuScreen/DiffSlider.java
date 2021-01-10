@@ -23,12 +23,12 @@ public class DiffSlider {
     public DiffSlider(int[] stagedims){
         //Difficulty
         Slider diffSlider = new Slider();
-        diffSlider.setMin(0);
-        diffSlider.setMax(10);
+        diffSlider.setMin(1);
+        diffSlider.setMax(5);
         diffSlider.setMaxWidth(stagedims[0]/4);
 
-        diffSlider.setValue(5);
-        Main.setDifficulty(5);
+        diffSlider.setValue(1);
+        Main.setDifficulty(1);
 
         String initialText = "Difficulty: " + diffSlider.getValue();
         Text diffValueText = new Text(initialText.substring(0,initialText.length() -2));

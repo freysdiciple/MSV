@@ -23,12 +23,12 @@ public class SizeSlider {
     public SizeSlider(int[] stagedims){
         //Size
         Slider sizeSlider = new Slider();
-        sizeSlider.setMin(10);
-        sizeSlider.setMax(50);
+        sizeSlider.setMin(4);
+        sizeSlider.setMax(10);
         sizeSlider.setMaxWidth(stagedims[0]/4);
 
-        sizeSlider.setValue(30);
-        Main.setGamesize(30);
+        sizeSlider.setValue(4);
+        Main.setGamesize(4);
 
         String initialText = "Size: " + sizeSlider.getValue();
         Text sizeValueText = new Text(initialText.substring(0,initialText.length() -2));

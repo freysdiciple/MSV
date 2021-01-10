@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.util.Timer;
@@ -18,20 +19,15 @@ public class TimeCounter {
     private Timer timer;
     private int timeElapsed = 0;
 
-    private static String timeUrl = "images/counter-icon.png";
-
     public TimeCounter(){
         //Setup timer for top
         counter = new HBox();
         counter.setAlignment(Pos.CENTER);
 
-        ImageView timePic = new ImageView(new Image(timeUrl));
-        timePic.setFitWidth(60);
-        timePic.setFitHeight(30);
-
-        Text counterText = new Text("00:00");
-        counterText.setStyle("-fx-font-size: 16px;");
-        counterText.setFill(Color.GREEN);
+        Text counterText = new Text("Time: 00:00");
+        Font pixelfont = Font.loadFont(this.getClass().getResource("../PressStart2P-Regular.ttf").toExternalForm(), 16);
+        counterText.setFont(pixelfont);
+        counterText.setFill(Color.WHITE);
 
         timer = new Timer();
         TimerTask task = new TimerTask() {
@@ -43,10 +39,10 @@ public class TimeCounter {
         };
         timer.scheduleAtFixedRate(task, 1000l, 1000l);
 
-        counter.getChildren().addAll(timePic, counterText);
+        counter.getChildren().add(counterText);
     }
     public String calcTimeString(int time) {
-        String stringTime = "";
+        String stringTime = "Time: ";
         int secs = time;
         int mins = 0;
 

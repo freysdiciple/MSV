@@ -1,6 +1,10 @@
 package sample.GameScreen;
 
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 
 public class HexTile {
@@ -11,6 +15,8 @@ public class HexTile {
     private int ypos;
 
     private Polygon tile;
+
+    private static String tileUrl = "images/temp-tile.png";
 
     public HexTile(double sideLength, int[] pos) {
         sidelength = sideLength;
@@ -28,7 +34,14 @@ public class HexTile {
                 0.0,Math.sqrt(3)*sidelength,
                 -1*sidelength/2,Math.sqrt(3)*sidelength/2
         );
-        tile.setFill(Color.RED);
+        tile.setFill(new ImagePattern(new Image("images/hex-tile.png")));
+        tile.setId("hextile");
+
+        tile.setOnMouseClicked(e -> {
+            if(e.getButton() == MouseButton.SECONDARY){
+                tile.setFill(new ImagePattern(new Image("images/hex-flag-tile.png")));
+            }
+        });
 
     }
 
