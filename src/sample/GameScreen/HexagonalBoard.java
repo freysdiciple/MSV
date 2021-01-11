@@ -13,49 +13,73 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class HexagonalBoard {
-    private int size = 10;
+public class HexagonalBoard extends StackPane {
 
-    private double sideLength;
+    static int size;
+    static int diameter;
+    static double sidelength;
+    static int inset;
+    static int amountMines;
 
     static private HBox board;
     static private VBox boat;
-    static private StackPane whole;
 
-    public HexagonalBoard(int stagewidth, int inset, int _size){
-        size = _size;
+    static private HexTile[][] tileField;
+
+    public HexagonalBoard(int stagewidth, int inset, int size, int difficulty){
+        super();
+
+        this.size = size;
+        this.diameter = 2*size + 1;
+        this.inset = inset;
+        this.sidelength = (stagewidth/2 - 2*inset)/(4*size + 2);
+        this.amountMines = difficulty;
+
+        createNewTileField();
+        createTileFieldVisual();
+        createBoatDecoration();
+
+        getChildren().addAll(boat, board);
+
+    }
+
+    public void createNewTileField(){
+
+        tileField = new HexTile[diameter][];
+
+        for(int col = 0; col < diameter; col++){
+            tileField[col] = new HexTile[diameter - Math.abs(col-size)];
+
+            for(int row =0; row<tileField[col].length; row++){
+                tileField[col][row] = new HexTile(sidelength, new int[]{col,row});
+            }
+        }
+    }
+
+    public void createTileFieldVisual(){
 
         board = new HBox();
         board.setPadding(new Insets(inset,inset,inset,inset));
         board.setAlignment(Pos.CENTER);
 
-        sideLength = (stagewidth/2 - 2*inset)/(4*size + 2);
+        for(int col = 0; col< tileField.length; col++){
 
-        HBox verticalAxis = new HBox(0);
+            VBox currCol = new VBox(sidelength/2);
 
-        for(int col = -size; col<=size; col++){
-
-            //Afstanden mellem alle hexagonerne er halvdelen af sidelaengden
-            VBox currCol = new VBox(sideLength/2);
-
-            //Dette for-loop skaber pladsen der forskyder kolonnerne fra hinanden
-            for(int row = 0; row<Math.abs(col); row++){
-                currCol.getChildren().add(new Rectangle(0,Math.sqrt(3)*sideLength/2 - sideLength/4));
+            //Skaber pladsen der forskyder kolonnerne fra hinanden
+            for(int row = 0; row < diameter - tileField[col].length; row++){
+                currCol.getChildren().add(new Rectangle(0,Math.sqrt(3)*sidelength/2 - sidelength/4));
             }
 
-            //Dette for-loop skaber HexTilesne
-            for(int row = 0; row<=2*size-Math.abs(col); row++ ){
-                //Skaber ny hextile og tilfoejer dens visual til kolonnen
-                HexTile currTile = new HexTile(sideLength, new int[]{col + size, row});
-                currCol.getChildren().add(currTile.visual());
+            for(int row = 0; row < tileField[col].length; row++ ){
+                currCol.getChildren().add(tileField[col][row]);
             }
 
-            //Hver gang en kolonne er skabt blir den tilfoejet til raekkerne
-            verticalAxis.getChildren().add(currCol);
+            board.getChildren().add(currCol);
         }
+    }
 
-        board.getChildren().add(verticalAxis);
-
+    public void createBoatDecoration(){
         boat = new VBox(10);
         boat.setPadding(new Insets(0,0,0,50));
         boat.setAlignment(Pos.CENTER_LEFT);
@@ -71,14 +95,46 @@ public class HexagonalBoard {
         boatimage.setFitHeight(75);
 
         boat.getChildren().addAll(boattext, boatimage);
-
-
-        whole = new StackPane();
-        whole.getChildren().addAll(boat, board);
-
     }
 
-    public StackPane visual(){
-        return whole;
+    private void setMines() {
+        int curMines = 0;
+        while(curMines < this.amountMines) {
+            int x = (int)(Math.random() * diameter);
+            int y = (int)(Math.random() * tileField[x].length);
+
+            if (!tileField[x][y].isMine()) {
+                tileField[x][y].toggleIsMine();
+                curMines++;
+            }
+        }
+    }
+
+    private void setAdjacentMineCounters() {
+        for(int x = 0; x < tileField.length; x++) {
+            for (int y = 0; y < tileField[x].length; y++) {
+                tileField[x][y].setAdjacentMines(getSideMines(x, y));
+            }
+        }
+    }
+
+    public int getSideMines(int col, int row){
+        int mines = 0;
+        int[][] fields = {
+                {col, row-1},
+                {col+1, row},
+                {col, row+1},
+                {col-1, row},
+                {col-1, col > 5 ? row+1 : row-1},
+                {col+1, col < 5 ? row-1 : row+1}
+        };
+        for(int i = 0; i < fields.length; i++) {
+            int tempx = fields[i][0];
+            int tempy = fields[i][1];
+            if(tempx >= 0 && tempx < diameter && tempy >= 0 && tempy < tileField[tempx].length && tileField[tempx][tempy].isMine()) {
+                mines++;
+            }
+        }
+        return mines;
     }
 }

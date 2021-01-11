@@ -44,7 +44,7 @@ public class Main extends Application {
     }
 
     public static void collectGameScene(){
-        game = new GameScene(stageWidth, sizeX).visual();
+        game = new GameScene(stageWidth, sizeX, difficulty).visual();
     }
 
     public static void goToScene(String where){

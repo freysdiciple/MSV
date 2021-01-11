@@ -3,16 +3,16 @@ package sample.GameScreen;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 
-public class GameScene {
+public class GameScene{
 
     Scene gamescene;
 
     int inset = 30;
 
-    public GameScene(int stageWidth, int size){
+    public GameScene(int stageWidth, int size, int difficulty){
         BorderPane gameView = new BorderPane();
         gameView.setTop(new TopMenu(stageWidth, inset).visual());
-        gameView.setCenter(new HexagonalBoard(stageWidth, inset, size).visual());
+        gameView.setCenter(new HexagonalBoard(stageWidth, inset, size, difficulty));
         gameView.setId("gameback");
 
         gamescene = new Scene(gameView);

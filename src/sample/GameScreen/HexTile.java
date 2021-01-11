@@ -7,26 +7,23 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 
-public class HexTile {
+public class HexTile extends Polygon {
+
+    private static boolean ismine;
+    private static int adjacentMines;
 
     private double sidelength;
 
-    private int xpos;
-    private int ypos;
-
-    private Polygon tile;
+    private int[] pos;
 
     private static String tileUrl = "images/temp-tile.png";
 
-    public HexTile(double sideLength, int[] pos) {
+    public HexTile(double sideLength, int[] _pos) {
+        super();
         sidelength = sideLength;
+        pos = _pos;
 
-        xpos = pos[0];
-        ypos = pos[1];
-
-        tile = new Polygon();
-        //Skaber sekskantens form
-        tile.getPoints().addAll(
+        getPoints().addAll(
                 0.0,0.0,
                 sidelength,0.0,
                 3*sidelength/2,Math.sqrt(3)*sidelength/2,
@@ -34,16 +31,23 @@ public class HexTile {
                 0.0,Math.sqrt(3)*sidelength,
                 -1*sidelength/2,Math.sqrt(3)*sidelength/2
         );
-        tile.setFill(new ImagePattern(new Image("images/hex-tile.png")));
-        tile.setId("hextile");
+        setFill(new ImagePattern(new Image("images/hex-tile.png")));
+        setId("hextile");
 
-        tile.setOnMouseClicked(e -> {
+        setOnMouseClicked(e -> {
             if(e.getButton() == MouseButton.SECONDARY){
-                tile.setFill(new ImagePattern(new Image("images/hex-flag-tile.png")));
+                setFill(new ImagePattern(new Image("images/hex-flag-tile.png")));
             }
         });
-
     }
 
-    public Polygon visual(){return tile;}
+    public boolean isMine(){
+        return ismine;
+    }
+
+    public void toggleIsMine(){
+        ismine = !ismine;
+    }
+
+    public void setAdjacentMines(int val) { adjacentMines = val; }
 }
