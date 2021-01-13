@@ -31,13 +31,13 @@ public class TopMenu {
 
         ImageView title = new ImageView();
         title.setImage(new Image(titleURL));
-        title.setFitWidth(360);
-        title.setFitHeight(45);
+        title.setFitWidth(stagewidth/3);
+        title.setFitHeight(stagewidth/22);
 
-        Rectangle newgame = new Rectangle(180,40);
+        Rectangle newgame = new Rectangle(stagewidth/6,stagewidth/27);
         newgame.setFill(new ImagePattern(new Image(newGameURL)));
         newgame.setId("newgame-button");
-        newgame.setOnMouseClicked(e -> Main.goToScene("pre"));
+        newgame.setOnMouseClicked(e -> Main.goToScene("main-menu"));
 
         StackPane filler1 = new StackPane();
         filler1.getChildren().add(newgame);

@@ -26,20 +26,20 @@ public class HexagonalBoard extends StackPane {
 
     static private HexTile[][] tileField;
 
-    public HexagonalBoard(int stagewidth, int inset, int size, int difficulty){
+    public HexagonalBoard(int[] stagedims, int inset, int size, int difficulty){
         super();
 
         this.size = size;
         this.diameter = 2*size + 1;
         this.inset = inset;
-        this.sidelength = (stagewidth/2 - 2*inset)/(4*size + 2);
+        this.sidelength = (stagedims[1]-2*inset)/(2*size*(2*Math.sqrt(3)) + 2*Math.sqrt(3));
         this.amountMines = difficulty;
 
         createNewTileField();
         createTileFieldVisual();
-        createBoatDecoration();
+        //createBoatDecoration();
 
-        getChildren().addAll(boat, board);
+        getChildren().addAll(board);
 
     }
 

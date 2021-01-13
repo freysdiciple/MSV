@@ -2,22 +2,20 @@ package sample;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import sample.GameScreen.BoardGenerator;
 import sample.GameScreen.GameScene;
-import sample.GameScreen.HexagonalBoard;
-import sample.GameScreen.TopMenu;
-import sample.MenuScreen.PregameMenu;
+import sample.MainMenuScreen.MainMenu;
+import sample.MultiPlayerMenu.MultiPlayerMenu;
+import sample.SinglePlayerMenu.SinglePlayerMenu;
 
 public class Main extends Application {
 
     private static Stage window;
-    private static Scene pregame, game;
+    private static Scene multipregame = null, singlepregame = null, game = null, mainmenu = null;
 
-    static int stageWidth = 1000;
-    static int stageHeight = 600;
+    static int stageWidth = (int)Screen.getPrimary().getVisualBounds().getWidth();
+    static int stageHeight = (int)Screen.getPrimary().getVisualBounds().getHeight();
 
     static final int gap = 0;
 
@@ -33,9 +31,9 @@ public class Main extends Application {
         window = primaryStage;
         window.setTitle("Hello World");
 
-        pregame = new PregameMenu(new int[]{stageWidth, stageHeight}).getScene();
+        mainmenu = new MainMenu(new int[]{stageWidth, stageHeight});
 
-        window.setScene(pregame);
+        window.setScene(mainmenu);
         window.show();
     }
 
@@ -44,11 +42,33 @@ public class Main extends Application {
     }
 
     public static void collectGameScene(){
-        game = new GameScene(stageWidth, sizeX, difficulty).visual();
+        game = new GameScene(new int[]{stageWidth,stageHeight}, sizeX, difficulty);
     }
 
+    public static void collectSinglePregameScene() { singlepregame = new SinglePlayerMenu(new int[]{stageWidth, stageHeight});}
+
+    public static void collectMultiPregameScene() { multipregame = new MultiPlayerMenu(new int[]{stageWidth, stageHeight});}
+
     public static void goToScene(String where){
-        window.setScene(where == "pre" ? pregame : game);
+
+        switch (where){
+            case "main-menu":
+                window.setScene(mainmenu);
+                break;
+            case "single-pregame":
+                if(singlepregame == null) collectSinglePregameScene();
+                window.setScene(singlepregame);
+                break;
+            case "multi-pregame":
+                if(multipregame == null) collectMultiPregameScene();
+                window.setScene(multipregame);
+                break;
+            case "game":
+                collectGameScene();
+                window.setScene(game);
+                break;
+        }
+
     }
 
     public static void setGamesize(int _sizeX){

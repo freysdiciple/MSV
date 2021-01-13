@@ -31,7 +31,8 @@ public class HexTile extends Polygon {
                 0.0,Math.sqrt(3)*sidelength,
                 -1*sidelength/2,Math.sqrt(3)*sidelength/2
         );
-        setFill(new ImagePattern(new Image("images/hex-tile.png")));
+
+        setFill(Color.DARKTURQUOISE);
         setId("hextile");
 
         setOnMouseClicked(e -> {
